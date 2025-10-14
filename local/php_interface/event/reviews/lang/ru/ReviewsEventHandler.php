@@ -1,0 +1,3 @@
+<?php
+$MESS["REVIEWS_EVENT_HANDLER_LENGTH_REVIEW_TEXT_ERROR"] = "Текст анонса слишком короткий: #PREVIEW_TEXT_LENGTH#";
+$MESS["REVIEWS_EVENT_HANDLER_NEW_AUTHOR"] = "В рецензии #REVIEW_ID# изменился автор с #OLD_AUTHOR_ID# на #NEW_AUTHOR_ID#";
