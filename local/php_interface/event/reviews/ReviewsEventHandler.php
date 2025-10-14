@@ -33,7 +33,7 @@ class ReviewsEventHandler
 
     public static function onAfterReviewUpdate(&$arFields)
     {
-        if ($arFields["IBLOCK_ID"] == 5 && !isset($arFields["RESULT_MESSAGE"]) && static::$oldAuthorId !== $newAuthorId)
+        if ($arFields["IBLOCK_ID"] == 5 && \Bitrix\Main\Loader::includeModule("iblock") && !isset($arFields["RESULT_MESSAGE"]) && static::$oldAuthorId !== $newAuthorId)
         {
             $newAuthor = \CIBlockElement::GetProperty(5, $arFields["ID"], [], ["CODE" => "AUTHOR"]);
             $newAuthorId = $newAuthor->GetNext()["VALUE"];
