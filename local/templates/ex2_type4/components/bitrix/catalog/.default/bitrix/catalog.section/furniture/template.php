@@ -48,6 +48,18 @@ foreach($arResult["ITEMS"] as $cell=>$arElement):
 	</div>
 
 <?
+	if (isset($arResult["EXTRA"][$arElement["ID"]])) {
+?>
+	<div>Рецензии:</div>
+<?
+		foreach($arResult["EXTRA"][$arElement["ID"]] as $review) {
+?>
+	<div><?=$review;?></div>
+<?
+		}
+	}
+?>
+<?
 	foreach($arElement["PRICES"] as $code=>$arPrice):
 		if($arPrice["CAN_ACCESS"]):
 ?>
