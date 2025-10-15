@@ -5,6 +5,7 @@ CModule::AddAutoloadClasses(
 	[
         'Event\\Reviews\\ReviewsEventHandler' => '/local/php_interface/event/reviews/ReviewsEventHandler.php',
         'Event\\Users\\UsersEventHandler' => '/local/php_interface/event/users/UsersEventHandler.php',
+        'Agents\\Reviews\\ReviewAgent' => '/local/php_interface/agents/reviews/ReviewAgent.php',
     ]
 );
 
