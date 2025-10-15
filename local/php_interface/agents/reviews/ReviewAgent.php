@@ -1,16 +1,14 @@
 <?php
 
-namespace agents\reviews;
+namespace Agents\Reviews;
 
-use Bitrix\Iblock\ElementTable;
-use Bitrix\Main\Loader;
-use Bitrix\Main\Type\DateTime;
+\Bitrix\Main\Localization\Loc::loadMessages(__FILE__);
 
 class ReviewAgent
 {
     public static function Agent_ex_610($lastTimeExec = "")
     {
-        if (Loader::includeModule("iblock")) {
+        if (\Bitrix\Main\Loader::includeModule("iblock")) {
 
             $result = static::prepareResult($lastTimeExec);
 
@@ -24,16 +22,18 @@ class ReviewAgent
                 ]),
             ]);
         }
+
+        return "\\" . __METHOD__ . "(\"" . (new \Bitrix\Main\Type\DateTime())->toString() . "\");";
     }
 
     private static function prepareResult($lastTimeExec = "")
     {
-        $query = new \Bitrix\Main\Entity\Query(ElementTable::GetEntity());
+        $query = new \Bitrix\Main\Entity\Query(\Bitrix\Iblock\ElementTable::GetEntity());
 
         $query->setSelect(["ID", "TIMESTAMP_X"])
             ->setFilter([
-                "IBLOCK_ID" => 2,
-                ">TIMESTAMP_X" => $lastTimeExec ?: (new DateTime())->add("-1 day")
+                "IBLOCK_ID" => 5,
+                ">TIMESTAMP_X" => $lastTimeExec ?: (new \Bitrix\Main\Type\DateTime())->add("-1 day")
             ]);
         
         return $query->exec()->fetchAll();
