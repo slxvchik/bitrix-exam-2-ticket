@@ -2,17 +2,24 @@
 
 namespace Agents\Reviews;
 
-\Bitrix\Main\Localization\Loc::loadMessages(__FILE__);
+use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\Loader;
+use CEventLog;
+use Bitrix\Main\Type\DateTime;
+use Bitrix\Main\Entity\Query;
+use Bitrix\Iblock\ElementTable;
+
+Loc::loadMessages(__FILE__);
 
 class ReviewAgent
 {
     public static function Agent_ex_610($lastTimeExec = "")
     {
-        if (\Bitrix\Main\Loader::includeModule("iblock")) {
+        if (Loader::includeModule("iblock")) {
 
             $result = static::prepareResult($lastTimeExec);
 
-            \CEventLog::Add([
+            CEventLog::Add([
                 'SEVERITY' => 'INFO',
                 'AUDIT_TYPE_ID' => 'ex2_610',
                 'MODULE_ID' => 'iblock',
@@ -23,17 +30,17 @@ class ReviewAgent
             ]);
         }
 
-        return "\\" . __METHOD__ . "(\"" . (new \Bitrix\Main\Type\DateTime())->toString() . "\");";
+        return "\\" . __METHOD__ . "(\"" . (new DateTime())->toString() . "\");";
     }
 
     private static function prepareResult($lastTimeExec = "")
     {
-        $query = new \Bitrix\Main\Entity\Query(\Bitrix\Iblock\ElementTable::GetEntity());
+        $query = new Query(ElementTable::GetEntity());
 
         $query->setSelect(["ID", "TIMESTAMP_X"])
             ->setFilter([
                 "IBLOCK_ID" => 5,
-                ">TIMESTAMP_X" => $lastTimeExec ?: (new \Bitrix\Main\Type\DateTime())->add("-1 day")
+                ">TIMESTAMP_X" => $lastTimeExec ?: (new DateTime())->add("-1 day")
             ]);
         
         return $query->exec()->fetchAll();
