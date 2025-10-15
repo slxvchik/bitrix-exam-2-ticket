@@ -6,6 +6,7 @@ CModule::AddAutoloadClasses(
         'Event\\Reviews\\ReviewsEventHandler' => '/local/php_interface/event/reviews/ReviewsEventHandler.php',
         'Event\\Users\\UsersEventHandler' => '/local/php_interface/event/users/UsersEventHandler.php',
         'Event\\Index\\IndexEventHandler' => '/local/php_interface/event/index/IndexEventHandler.php',
+        'Event\\Menu\\ContentManagerMenu' => '/local/php_interface/event/menu/ContentManagerMenu.php',
     ]
 );
 
@@ -17,3 +18,5 @@ AddEventHandler("main", "OnBeforeUserUpdate", Array("Event\\Users\\UsersEventHan
 AddEventHandler("main", "OnAfterUserUpdate", Array("Event\\Users\\UsersEventHandler", "onAfterUserUpdateHandler"));
 
 AddEventHandler("search", "BeforeIndex", Array("Event\\Index\\IndexEventHandler", "BeforeIndexReviewHandler"));
+
+AddEventHandler("main", "OnBuildGlobalMenu", Array("Event\\Menu\\ContentManagerMenu", "onBuildGlobalMenuHandler"));
