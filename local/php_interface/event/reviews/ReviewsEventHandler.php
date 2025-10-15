@@ -5,6 +5,8 @@ namespace Event\Reviews;
 use Bitrix\Main\Localization\Loc;
 
 use CEventLog;
+use CIBlockElement;
+use Bitrix\Main\Loader;
 
 Loc::loadMessages(__FILE__);
 
@@ -23,9 +25,9 @@ class ReviewsEventHandler
     
     public static function onBeforeReviewUpdate(&$arFields)
     {
-        if ($arFields["IBLOCK_ID"] == 5 && \Bitrix\Main\Loader::includeModule("iblock"))
+        if ($arFields["IBLOCK_ID"] == 5 && Loader::includeModule("iblock"))
         {
-            $oldAuthor = \CIBlockElement::GetProperty(5, $arFields["ID"], [], ["CODE" => "AUTHOR"]);
+            $oldAuthor = CIBlockElement::GetProperty(5, $arFields["ID"], [], ["CODE" => "AUTHOR"]);
             static::$oldAuthorId = $oldAuthor->GetNext()["VALUE"];
             return self::checkPreviewText($arFields);
         }
@@ -33,9 +35,9 @@ class ReviewsEventHandler
 
     public static function onAfterReviewUpdate(&$arFields)
     {
-        if ($arFields["IBLOCK_ID"] == 5 && \Bitrix\Main\Loader::includeModule("iblock") && !isset($arFields["RESULT_MESSAGE"]) && static::$oldAuthorId !== $newAuthorId)
+        if ($arFields["IBLOCK_ID"] == 5 && Loader::includeModule("iblock") && !isset($arFields["RESULT_MESSAGE"]) && static::$oldAuthorId !== $newAuthorId)
         {
-            $newAuthor = \CIBlockElement::GetProperty(5, $arFields["ID"], [], ["CODE" => "AUTHOR"]);
+            $newAuthor = CIBlockElement::GetProperty(5, $arFields["ID"], [], ["CODE" => "AUTHOR"]);
             $newAuthorId = $newAuthor->GetNext()["VALUE"];
                 
             CEventLog::Add([
