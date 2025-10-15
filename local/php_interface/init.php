@@ -5,6 +5,7 @@ CModule::AddAutoloadClasses(
 	[
         'Event\\Reviews\\ReviewsEventHandler' => '/local/php_interface/event/reviews/ReviewsEventHandler.php',
         'Event\\Users\\UsersEventHandler' => '/local/php_interface/event/users/UsersEventHandler.php',
+        'Event\\Index\\IndexEventHandler' => '/local/php_interface/event/index/IndexEventHandler.php',
     ]
 );
 
@@ -14,3 +15,5 @@ AddEventHandler("iblock", "OnAfterIBlockElementUpdate", Array("Event\\Reviews\\R
 
 AddEventHandler("main", "OnBeforeUserUpdate", Array("Event\\Users\\UsersEventHandler", "onBeforeUserUpdateHandler"));
 AddEventHandler("main", "OnAfterUserUpdate", Array("Event\\Users\\UsersEventHandler", "onAfterUserUpdateHandler"));
+
+AddEventHandler("search", "BeforeIndex", Array("Event\\Index\\IndexEventHandler", "BeforeIndexReviewHandler"));
